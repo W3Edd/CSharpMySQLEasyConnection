@@ -1,0 +1,4 @@
+server => ["localhost"];
+user =>  ["root"];
+database => ["information_schema"];
+password => [""];
