@@ -1,9 +1,9 @@
-namespace PruebaMySQL.MySQLConnection {
+namespace MySQLEasyConnection {
 	using System;
 	using System.Collections.Generic;
 	using System.Data;
 	using MySql.Data.MySqlClient;
-	using PruebaMySQL.Configuration;
+	using MySQLEasyConnection.Configuration;
 	using W3Tools;
 
 	public class Connection {
@@ -11,6 +11,10 @@ namespace PruebaMySQL.MySQLConnection {
 
 		public Connection() {
 			ConnectionConfiguration.LoadConnection(this);
+		}
+
+		public Connection(string path) {
+			ConnectionConfiguration.LoadFromFile(this, path);
 		}
 
 		public Connection(string server, string user, string database, string password) {

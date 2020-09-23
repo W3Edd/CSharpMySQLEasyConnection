@@ -1,5 +1,5 @@
-namespace PruebaMySQL.Configuration {
-	using PruebaMySQL.MySQLConnection;
+namespace MySQLEasyConnection.Configuration {
+	using MySQLEasyConnection;
 	using W3Tools;
 
 	public abstract class ConnectionConfiguration {
