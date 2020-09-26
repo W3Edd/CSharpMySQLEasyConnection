@@ -7,6 +7,11 @@ namespace MySQLEasyConnection {
 	using W3Tools;
 
 	public class Connection {
+		public string Server { get; set; }
+		public string User { get; set; }
+		public string Database { get; set; }
+		public string Password { get; set; }
+		public MySqlConnection SqlConnection { get; set; }
 		private static readonly Logger Logger = new Logger();
 
 		public Connection() {
@@ -23,12 +28,6 @@ namespace MySQLEasyConnection {
 			this.Database = database;
 			this.Password = password;
 		}
-
-		public string Server { get; set; }
-		public string User { get; set; }
-		public string Database { get; set; }
-		public string Password { get; set; }
-		public MySqlConnection SqlConnection { get; set; }
 
 		public void LoadConnection() {
 			ConnectionConfiguration.LoadConnection(this);
@@ -92,15 +91,15 @@ namespace MySQLEasyConnection {
 
 		public bool SendQuery(string query, string[] values) {
 			if (query == null) throw new ArgumentNullException(nameof(query));
-			if (values == null) throw new ArgumentNullException(nameof(values));
-
 			bool querySent = false;
-
 			try {
 				this.OpenConnection();
 				MySqlCommand command = new MySqlCommand(query, this.SqlConnection);
-				for (int i = 0; i < values.Length; i++)
-					command.Parameters.AddWithValue($"@{i + 1}", values[i]);
+				if (values != null) {
+					for (int i = 0; i < values.Length; i++) {
+						command.Parameters.AddWithValue($"@{i + 1}", values[i]);
+					}
+				}
 				int status = command.ExecuteNonQuery();
 				this.CloseConnection();
 				querySent = status != -1;
@@ -119,8 +118,11 @@ namespace MySQLEasyConnection {
 				this.OpenConnection();
 
 				MySqlCommand command = new MySqlCommand(query, this.SqlConnection);
-				for (int i = 0; i < values.Length; i++)
-					command.Parameters.AddWithValue($@"{i + 1}", values[i]);
+				if (values != null) {
+					for (int i = 0; i < values.Length; i++) {
+						command.Parameters.AddWithValue($@"{i + 1}", values[i]);
+					}
+				}
 				MySqlDataReader reader = command.ExecuteReader();
 
 				int fieldCount;

@@ -35,7 +35,7 @@ namespace MySQLEasyConnection.Configuration {
 			else
 				savedConnection = GetDefaultConnectionConfigFile();
 
-			if (savedConnection.GetSizeInLines() == 4) {
+			if (savedConnection.GetSizeInLines() >= 4) {
 				W3Parser connectionConfiguration = new W3Parser(savedConnection.Path);
 				connection.Server = connectionConfiguration.Get("server")[0];
 				connection.User = connectionConfiguration.Get("user")[0];
@@ -46,7 +46,7 @@ namespace MySQLEasyConnection.Configuration {
 
 		public static bool LoadFromFile(Connection connection, string path) {
 			bool loaded = false;
-			if (path != null && File.Exists(path) && File.GetSizeInLines(path) == 4) {
+			if (path != null && File.Exists(path) && File.GetSizeInLines(path) >= 4) {
 				W3Parser connectionConfiguration = new W3Parser(path);
 				connection.Server = connectionConfiguration.Get("server")[0];
 				connection.User = connectionConfiguration.Get("user")[0];
